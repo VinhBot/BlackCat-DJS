@@ -17,31 +17,10 @@
 	</p>
 </div>
 
-
-## usage 
-```js
-import { Client as BlackCatClient } from "blackcat-djs";
-
-const client = new BlackCatClient({
-  /* 
-  discordClient: {
-    // Discord.Client
-  }, 
-  */
-  config: {
-    tokenBot: "", //"ODc4ODczNzgwNTk0ODM1NDc2.Gtko8U.nxzfNfxOC6rKvNphSzNigcT6NcF2UwU1EXVjgs",
-    prefix: "!",
-    developer: ""
-  },
-  // chạy events do nph đề xuất
-  commandHandler: {
-    prefixCommand: true,
-    slashCommand: true,
-    setLanguage: "vi",
-    path: {
-      prefixCommand: "./test/Commands",
-      slashCommand: "./test/slashCommands",
-    },
-  },
-});
-```
+<details open>
+    <summary>Tính Năng Chính</summary>
+    <ul>
+        <li>Xử Lý Lệnh: Client bao gồm một trình xử lý lệnh để quản lý các lệnh khác nhau một cách hiệu quả</li>
+        <li>Hỗ Trợ Đa Ngôn Ngữ: Chọn ngôn ngữ ưa thích của bạn bằng cách đặt tùy chọn setLanguage.</li>
+    </ul>
+</details>

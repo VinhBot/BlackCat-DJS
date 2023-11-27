@@ -7,10 +7,20 @@ import fs from "node:fs";
 import vi from "./Language/vi.js";
 import en from "./Language/en.js";
 
+/**
+ * Lớp đại diện cho một client Discord với chức năng mở rộng.
+ * @extends Discord.Client
+ */
 export class Client extends Discord.Client {
+  /**
+   * Constructor cho lớp Client.
+   * @param {Object} options - Các tùy chọn để cấu hình client.
+   * @param {Object} options.discordClient - Các tùy chọn cho client Discord.
+   * @param {Object} options.commandHandler - Các tùy chọn cho trình xử lý lệnh.
+   * @param {Object} options.config - Các tùy chọn cấu hình.
+   */
   constructor(options) {
-    // Nếu `options.discordClient` không tồn tại, sử dụng một đối tượng Discord cụ thể; 
-    // nếu tồn tại, sử dụng giá trị của `options.discordClient`.
+    // Gọi constructor của lớp cha (Discord.Client) với các tùy chọn phù hợp.
     super(options.discordClient === null ? options.discordClient : {
       allowedMentions: {
         parse: ["roles", "users", "everyone"],
@@ -24,42 +34,34 @@ export class Client extends Discord.Client {
         Discord.GatewayIntentBits.GuildMembers,
       ],
     }); 
-    /*
-     * Thay đổi ngôn ngữ cho package.
-     * @type {string && default "vi"}
-     */
+
+    // Đặt ngôn ngữ hiện tại cho gói. mặc định là tiếng việt
     this.currentLanguage = options.commandHandler.setLanguage || "vi";
-    /*
-     * tùy chọn dành cho cmdHandler
-     * @type {commandOption}
-     */
+    // Các tùy chọn cho trình xử lý lệnh.
     this.command = options.commandHandler;
-    /*
-     * tùy chọn configJson
-     * @type {configOption}
-     */
+    // Các tùy chọn cấu hình.
     this.config = options.config;
-    /*
-     * @info Discord.Collection, Khởi tạo một đối tượng Collection từ thư viện Discord.js để lưu trữ các lệnh
-     */
-    // Tạo một Discord Collection mới để lưu trữ các lệnh dạng slash
+    
+    // Khởi tạo một Discord.Collection để lưu trữ slash commands.
     this.slashCommands = new Discord.Collection();
-    // Tạo một Discord Collection mới để quản lý thời gian chờ giữa các lệnh
+    // Khởi tạo một Discord Collection để quản lý cooldown của lệnh.
     this.cooldowns = new Discord.Collection();
-    // Tạo một Discord Collection mới để lưu trữ các lệnh thông thường
+    // Khởi tạo một Discord Collection để lưu trữ các lệnh thông thường.
     this.commands = new Discord.Collection();
-    // Tạo một Discord Collection mới để lưu trữ bí danh của các lệnh
+    // Khởi tạo một Discord Collection để lưu trữ các bí danh của lệnh.
     this.aliases = new Discord.Collection();
-    // Gọi và sử dụng hàm.
+
+    // Gọi và sử dụng hàm commandHandler.
     this.commandHandler();
+
     /**
-     * Authorization token for the logged in bot.
-     * Mã thông báo ủy quyền cho bot đã đăng nhập.
+     * Token xác thực cho bot đã đăng nhập.
      * @type {?string}
      */
     if (!this.config.tokenBot || typeof this.config.tokenBot !== 'string') {
       console.error(colors.blue("[BlackCat-DJS]: ") + colors.red(this.getLocalizedString("tokenBot")));
     } else {
+      // Đăng nhập vào bot với token được cung cấp.
       this.login(this.config.tokenBot);
     };
   };

@@ -4,19 +4,19 @@ import colors from "chalk";
 const client = new BlackCatClient({
   /* 
   discordClient: {
-    // Discord.Client
+    // Discord.Client 
   }, 
   */
   config: {
-    tokenBot: "ODgxNzA5MTQ2Njk1NjY3Nzcz.G_jbhs.ljgkIBFtLCUyjmK8MW8VUsMGBd-JIGvlQqzdV8",
+    tokenBot: "token bot",
     prefix: "!",
-    developer: ""
+    developer: "id owner"
   },
   // chạy events do nph đề xuất
   commandHandler: {
     prefixCommand: true,
     slashCommand: true,
-    setLanguage: "en",
+    setLanguage: "vi",
     path: {
       prefixCommand: "./test/Commands",
       slashCommand: "./test/slashCommands",
